@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "test-gate",
+      "trigger": "Stop",
+      "description": "Run the Guardian engine test suite when an agent execution completes. The engine tests are the gate.",
+      "action": {
+        "type": "command",
+        "command": "cd \"$(git rev-parse --show-toplevel)/engine\" && npm test 2>&1 | tail -n 30",
+        "timeout": 120
+      }
+    }
+  ]
+}

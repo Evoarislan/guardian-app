@@ -1,0 +1,12 @@
+Close-out for Guardian Session 1 (Step 6 of SESSION-1.md). Credit numbers for the result file, which you cannot see yourself: the Kiroween bonus bucket (kiroween-20-26) stood at 0.00 of 4,000 used when this session started, and at 26.64 of 4,000 used measured immediately before this close-out call — that figure covers BOTH Kiroween projects' session work today, not Guardian alone, and this close-out call will add a small increment on top. State exactly that in the result file; do not invent a Guardian-only split.
+
+Do this:
+1. Write SESSION-1-RESULT.md at the repo root, complete and honest:
+   - What was built and verified: engine integrated unmodified (21/21 tests), the hook adaptation, TraceSimulatorAdapter, the payload-logging dispatcher wrapper, the proof runner, the Flutter shell (analyze clean, web build green, 8/8 Flutter tests).
+   - Both proof endings with their output from the CURRENT proofs/episode-log.json (note: the proof was re-run during stage 3, so use the current file's hashes and entry counts, not any earlier run's), including both verify() results.
+   - Every disclosure from the session: the steering timing correction (the superseded 3-minute dispatch window, corrected in both steering copies); the payload-logging wrapper and why it exists; the engine's misleading "dispatched" resolution wording and how the shell handles it; the FakeScheduler note (full-length 60s/120s windows in milliseconds of wall time; a real-time run is not built); the label vocabulary difference between the older mock adapters and the new trace adapter; the duplicated assets/episode-log.json copy guarded by a test; no Dart engine yet (Phase 2); no alarm audio; the log chain not re-verified inside the app; Android/iOS builds not attempted (no Android SDK on this machine); template package IDs unchanged.
+   - An explicit statement that no real Twilio or Noonlight account, credential, token, or network call was used anywhere in this session.
+   - The credit start/stop figures exactly as given above.
+2. Copy the adapted .kiro/hooks/test-gate.json from the repo root over the pack's stale draft at kiro-pack/.kiro/hooks/test-gate.json so the pack matches the repo.
+3. Confirm tasks.md reflects the final state (Session 1 items checked; the GitHub repo bullet stays open as my decision, not yours).
+4. Commit everything, including .kiro, with the message: "Session 1: engine integration, proof runner, Flutter shell (recorded proof timeline)". Confirm the working tree is clean and report the commit hash.

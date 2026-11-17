@@ -1,0 +1,11 @@
+Stage 3 of Session 1: the Flutter app shell (Step 5 of SESSION-1.md). Environment: the Flutter SDK 3.50.0 (stable) is installed at ~/flutter/bin — prefix commands with export PATH="$HOME/flutter/bin:$PATH". The root warning is cosmetic. The Android SDK is NOT installed: do not try to install it in this session; use `flutter analyze` and `flutter build web` as the compile proof and record the Android build as a known gap.
+
+Scaffold the Flutter app INTO the existing guardian-app repo root (the repo already holds docs/, engine/, adapters/, integration/, proofs/, .kiro/). Preserve the existing README.md content (flutter create may want to overwrite it — restore or merge afterwards; the project README must survive). The shell, per design.md and ARCHITECTURE.md §1:
+- Wearer home screen: one huge "I'm OK" button and a "I need help" button, large type, high contrast.
+- Cancel-window screen: a visible countdown with an equally huge cancel ("I'm OK") affordance.
+- Episode timeline screen: renders proofs/episode-log.json (the file the Step 4 proof runner exported) showing BOTH proof episodes (cancelled and escalated) with every value labelled by source and freshness. Load it as a bundled asset (copy it into assets/ and declare it in pubspec.yaml; proofs/ stays the canonical export location — note the duplication honestly in the result file). Label the timeline screen as a recorded proof run, simulated.
+- The honest-limits line must appear on screen: "Demo build — dispatch is a sandbox; Guardian never calls 911 directly."
+- The escalated episode's dispatch step must read as dispatch DISABLED / nothing sent (per your stage-2 disclosure about the engine's misleading "dispatched" resolution wording), never as a completed dispatch.
+- Mock adapters only: no sensor code, no health store code, no real channels, no network calls.
+
+Run flutter analyze and flutter build web; report both results honestly, including any failure. Check off the tasks.md app-shell bullets you complete. Do not write SESSION-1-RESULT.md or commit in this call — close-out is next, and I will give you the credit start/stop numbers for the result file then.
