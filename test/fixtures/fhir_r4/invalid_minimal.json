@@ -1,0 +1,29 @@
+{
+  "_about": "Hand-written INVALID R4 resources, each with the problem it must be rejected for (substring of the checker's message).",
+  "cases": [
+    {"expect": "missing required element status",
+     "resource": {"resourceType": "Observation", "code": {"coding": [{"system": "http://loinc.org", "code": "8867-4"}]}}},
+    {"expect": "missing required element code",
+     "resource": {"resourceType": "Observation", "status": "final"}},
+    {"expect": "status",
+     "resource": {"resourceType": "Observation", "status": "done", "code": {"text": "x"}}},
+    {"expect": "unknown element valueQuantiy",
+     "resource": {"resourceType": "Observation", "status": "final", "code": {"text": "x"}, "valueQuantiy": {"value": 1}}},
+    {"expect": "missing required element recorded",
+     "resource": {"resourceType": "Provenance", "target": [{"reference": "Patient/p1"}], "agent": [{"who": {"display": "a"}}]}},
+    {"expect": "agent[0] missing required element who",
+     "resource": {"resourceType": "Provenance", "recorded": "2026-11-17T10:00:00Z", "target": [{"reference": "Patient/p1"}], "agent": [{}]}},
+    {"expect": "recorded",
+     "resource": {"resourceType": "Provenance", "recorded": "2026-11-17", "target": [{"reference": "Patient/p1"}], "agent": [{"who": {"display": "a"}}]}},
+    {"expect": "missing required element type",
+     "resource": {"resourceType": "Bundle"}},
+    {"expect": "Bundle.type",
+     "resource": {"resourceType": "Bundle", "type": "bag"}},
+    {"expect": "id",
+     "resource": {"resourceType": "Patient", "id": "has space"}},
+    {"expect": "extension[0] has no url",
+     "resource": {"resourceType": "Patient", "extension": [{"valueString": "x"}]}},
+    {"expect": "extension[0] valueUnsignedInt",
+     "resource": {"resourceType": "Patient", "extension": [{"url": "http://x.invalid/e", "valueUnsignedInt": -1}]}}
+  ]
+}

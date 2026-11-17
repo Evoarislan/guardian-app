@@ -2,6 +2,8 @@ import 'package:material_ui/material_ui.dart';
 
 import '../widgets/honest_limits.dart';
 import 'cancel_window_screen.dart';
+import 'interactive_rehearsal_screen.dart';
+import 'provider_screen.dart';
 import 'timeline_screen.dart';
 
 /// Wearer home: two huge buttons, large type, high contrast.
@@ -44,6 +46,19 @@ class _HomeScreenState extends State<HomeScreen> {
   void _openLiveRehearsal() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(builder: (_) => const LiveTimelineScreen()),
+    );
+  }
+
+  void _openInteractive() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+          builder: (_) => const InteractiveRehearsalScreen()),
+    );
+  }
+
+  void _openProvider() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const ProviderScreen()),
     );
   }
 
@@ -102,21 +117,39 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 16, color: Colors.white)),
                     ],
                     const SizedBox(height: 8),
+                    // One compact row, so the two big buttons keep their
+                    // height. Every destination is itself labelled SIMULATED.
                     Row(
                       children: [
                         Expanded(
                           child: _SmallButton(
+                            key: const Key('interactive-rehearsal-button'),
+                            label: 'Interactive\nrehearsal',
+                            onPressed: _openInteractive,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: _SmallButton(
                             key: const Key('live-rehearsal-button'),
-                            label: 'Live rehearsal\n(Dart engine, simulated)',
+                            label: 'Auto live\nrehearsal',
                             onPressed: _openLiveRehearsal,
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: 4),
                         Expanded(
                           child: _SmallButton(
                             key: const Key('open-timeline-button'),
-                            label: 'Recorded proof run\n(simulated)',
+                            label: 'Recorded\nproof run',
                             onPressed: _openTimeline,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: _SmallButton(
+                            key: const Key('provider-view-button'),
+                            label: 'Provider\nview',
+                            onPressed: _openProvider,
                           ),
                         ),
                       ],
@@ -153,7 +186,7 @@ class _SmallButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       ),
       child:
-          Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 15)),
+          Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 13)),
     );
   }
 }

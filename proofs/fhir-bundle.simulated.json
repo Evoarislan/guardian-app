@@ -1,0 +1,1195 @@
+{
+  "resourceType": "Bundle",
+  "id": "guardian-export-badd6b2ebbcc",
+  "meta": {
+    "security": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code": "HTEST",
+        "display": "test health data"
+      }
+    ],
+    "tag": [
+      {
+        "system": "https://guardian.invalid/fhir/CodeSystem/data-freshness",
+        "code": "simulated",
+        "display": "SIMULATED: not a real reading"
+      }
+    ],
+    "extension": [
+      {
+        "url": "https://guardian.invalid/fhir/StructureDefinition/data-label",
+        "extension": [
+          {
+            "url": "source",
+            "valueString": "Guardian FHIR export bundle"
+          },
+          {
+            "url": "freshness",
+            "valueCode": "simulated"
+          }
+        ]
+      },
+      {
+        "url": "https://guardian.invalid/fhir/StructureDefinition/export-notice",
+        "valueString": "SIMULATED DATA. Synthetic wearer, simulated signals and readings: not a real person's record. Guardian is a consumer safety aid, not a medical device; nothing here is a diagnosis or a clinical finding."
+      }
+    ]
+  },
+  "type": "collection",
+  "timestamp": "2026-11-17T22:42:14.044Z",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:4e339eee-224a-5b4d-a740-e328fb2ce754",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "guardian-synthetic-wearer",
+        "meta": {
+          "security": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code": "HTEST",
+              "display": "test health data"
+            }
+          ],
+          "tag": [
+            {
+              "system": "https://guardian.invalid/fhir/CodeSystem/data-freshness",
+              "code": "simulated",
+              "display": "SIMULATED: not a real reading"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>SIMULATED</b></p><p>Synthetic demo wearer. Placeholder only; carries no real identifiers.</p><p>source: synthetic placeholder (no real person); freshness: simulated</p></div>"
+        },
+        "extension": [
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/data-label",
+            "extension": [
+              {
+                "url": "source",
+                "valueString": "synthetic placeholder (no real person)"
+              },
+              {
+                "url": "freshness",
+                "valueCode": "simulated"
+              }
+            ]
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "anonymous",
+            "text": "Synthetic demo wearer"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6116a605-cb01-515e-9202-ad97a323a1ef",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-heart-rate-1794955274045",
+        "meta": {
+          "security": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code": "HTEST",
+              "display": "test health data"
+            }
+          ],
+          "tag": [
+            {
+              "system": "https://guardian.invalid/fhir/CodeSystem/data-freshness",
+              "code": "simulated",
+              "display": "SIMULATED: not a real reading"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>SIMULATED</b></p><p>Heart rate: 72 bpm (observed 2026-11-17T22:41:14.045Z)</p><p>source: simulated (mock health_connect); freshness: simulated</p></div>"
+        },
+        "extension": [
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/data-label",
+            "extension": [
+              {
+                "url": "source",
+                "valueString": "simulated (mock health_connect)"
+              },
+              {
+                "url": "freshness",
+                "valueCode": "simulated"
+              }
+            ]
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "Vital Signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": {
+          "reference": "urn:uuid:4e339eee-224a-5b4d-a740-e328fb2ce754",
+          "type": "Patient",
+          "display": "Synthetic demo wearer"
+        },
+        "effectiveDateTime": "2026-11-17T22:41:14.045Z",
+        "valueQuantity": {
+          "value": 72,
+          "unit": "bpm",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        },
+        "device": {
+          "display": "mock health_connect"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:3013aa5e-6e57-51f7-a1a2-f6d27b292470",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-spo2-1794955214045",
+        "meta": {
+          "security": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code": "HTEST",
+              "display": "test health data"
+            }
+          ],
+          "tag": [
+            {
+              "system": "https://guardian.invalid/fhir/CodeSystem/data-freshness",
+              "code": "simulated",
+              "display": "SIMULATED: not a real reading"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>SIMULATED</b></p><p>Oxygen saturation in Arterial blood by Pulse oximetry: 97 % (observed 2026-11-17T22:40:14.045Z)</p><p>source: simulated (mock health_connect); freshness: simulated</p></div>"
+        },
+        "extension": [
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/data-label",
+            "extension": [
+              {
+                "url": "source",
+                "valueString": "simulated (mock health_connect)"
+              },
+              {
+                "url": "freshness",
+                "valueCode": "simulated"
+              }
+            ]
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "Vital Signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "59408-5",
+              "display": "Oxygen saturation in Arterial blood by Pulse oximetry"
+            }
+          ],
+          "text": "Oxygen saturation in Arterial blood by Pulse oximetry"
+        },
+        "subject": {
+          "reference": "urn:uuid:4e339eee-224a-5b4d-a740-e328fb2ce754",
+          "type": "Patient",
+          "display": "Synthetic demo wearer"
+        },
+        "effectiveDateTime": "2026-11-17T22:40:14.045Z",
+        "valueQuantity": {
+          "value": 97,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org",
+          "code": "%"
+        },
+        "device": {
+          "display": "mock health_connect"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f3be3a10-479c-5910-bf98-c0e87dd7dcb5",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-steps-1794955154045",
+        "meta": {
+          "security": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code": "HTEST",
+              "display": "test health data"
+            }
+          ],
+          "tag": [
+            {
+              "system": "https://guardian.invalid/fhir/CodeSystem/data-freshness",
+              "code": "simulated",
+              "display": "SIMULATED: not a real reading"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>SIMULATED</b></p><p>Number of steps in unspecified time Pedometer: 1240 count (observed 2026-11-17T22:39:14.045Z)</p><p>source: simulated (mock health_connect); freshness: simulated</p></div>"
+        },
+        "extension": [
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/data-label",
+            "extension": [
+              {
+                "url": "source",
+                "valueString": "simulated (mock health_connect)"
+              },
+              {
+                "url": "freshness",
+                "valueCode": "simulated"
+              }
+            ]
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "activity",
+                "display": "Activity"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "55423-8",
+              "display": "Number of steps in unspecified time Pedometer"
+            }
+          ],
+          "text": "Number of steps in unspecified time Pedometer"
+        },
+        "subject": {
+          "reference": "urn:uuid:4e339eee-224a-5b4d-a740-e328fb2ce754",
+          "type": "Patient",
+          "display": "Synthetic demo wearer"
+        },
+        "effectiveDateTime": "2026-11-17T22:39:14.045Z",
+        "valueQuantity": {
+          "value": 1240,
+          "unit": "count",
+          "system": "http://unitsofmeasure.org",
+          "code": "{steps}"
+        },
+        "device": {
+          "display": "mock health_connect"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:04bc13c8-6ded-564d-8174-26a594245e93",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-sleep-1794955094045",
+        "meta": {
+          "security": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code": "HTEST",
+              "display": "test health data"
+            }
+          ],
+          "tag": [
+            {
+              "system": "https://guardian.invalid/fhir/CodeSystem/data-freshness",
+              "code": "simulated",
+              "display": "SIMULATED: not a real reading"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>SIMULATED</b></p><p>Sleep duration: 402 minutes (observed 2026-11-17T22:38:14.045Z)</p><p>source: simulated (mock health_connect); freshness: simulated</p></div>"
+        },
+        "extension": [
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/data-label",
+            "extension": [
+              {
+                "url": "source",
+                "valueString": "simulated (mock health_connect)"
+              },
+              {
+                "url": "freshness",
+                "valueCode": "simulated"
+              }
+            ]
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "activity",
+                "display": "Activity"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "93832-4",
+              "display": "Sleep duration"
+            }
+          ],
+          "text": "Sleep duration"
+        },
+        "subject": {
+          "reference": "urn:uuid:4e339eee-224a-5b4d-a740-e328fb2ce754",
+          "type": "Patient",
+          "display": "Synthetic demo wearer"
+        },
+        "effectiveDateTime": "2026-11-17T22:38:14.045Z",
+        "valueQuantity": {
+          "value": 402,
+          "unit": "minutes",
+          "system": "http://unitsofmeasure.org",
+          "code": "min"
+        },
+        "device": {
+          "display": "mock health_connect"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:4a442e56-a7b4-5b7e-8b5e-ec67420c9f2c",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-resting-heart-rate-1794955034045",
+        "meta": {
+          "security": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code": "HTEST",
+              "display": "test health data"
+            }
+          ],
+          "tag": [
+            {
+              "system": "https://guardian.invalid/fhir/CodeSystem/data-freshness",
+              "code": "simulated",
+              "display": "SIMULATED: not a real reading"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>SIMULATED</b></p><p>Heart rate --resting: 61 bpm (observed 2026-11-17T22:37:14.045Z)</p><p>source: simulated (mock health_connect); freshness: simulated</p></div>"
+        },
+        "extension": [
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/data-label",
+            "extension": [
+              {
+                "url": "source",
+                "valueString": "simulated (mock health_connect)"
+              },
+              {
+                "url": "freshness",
+                "valueCode": "simulated"
+              }
+            ]
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "Vital Signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "40443-4",
+              "display": "Heart rate --resting"
+            }
+          ],
+          "text": "Heart rate --resting"
+        },
+        "subject": {
+          "reference": "urn:uuid:4e339eee-224a-5b4d-a740-e328fb2ce754",
+          "type": "Patient",
+          "display": "Synthetic demo wearer"
+        },
+        "effectiveDateTime": "2026-11-17T22:37:14.045Z",
+        "valueQuantity": {
+          "value": 61,
+          "unit": "bpm",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        },
+        "device": {
+          "display": "mock health_connect"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:b059b891-9aa7-55c4-acd1-cab602ed7e88",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-skin-temperature-1794954974045",
+        "meta": {
+          "security": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code": "HTEST",
+              "display": "test health data"
+            }
+          ],
+          "tag": [
+            {
+              "system": "https://guardian.invalid/fhir/CodeSystem/data-freshness",
+              "code": "simulated",
+              "display": "SIMULATED: not a real reading"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>SIMULATED</b></p><p>Body surface temperature: 36.4 celsius (observed 2026-11-17T22:36:14.045Z)</p><p>source: simulated (mock health_connect); freshness: simulated</p></div>"
+        },
+        "extension": [
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/data-label",
+            "extension": [
+              {
+                "url": "source",
+                "valueString": "simulated (mock health_connect)"
+              },
+              {
+                "url": "freshness",
+                "valueCode": "simulated"
+              }
+            ]
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs",
+                "display": "Vital Signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "61008-9",
+              "display": "Body surface temperature"
+            }
+          ],
+          "text": "Body surface temperature"
+        },
+        "subject": {
+          "reference": "urn:uuid:4e339eee-224a-5b4d-a740-e328fb2ce754",
+          "type": "Patient",
+          "display": "Synthetic demo wearer"
+        },
+        "effectiveDateTime": "2026-11-17T22:36:14.045Z",
+        "valueQuantity": {
+          "value": 36.4,
+          "unit": "celsius",
+          "system": "http://unitsofmeasure.org",
+          "code": "Cel"
+        },
+        "device": {
+          "display": "mock health_connect"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a47cab41-625f-5e02-a0f7-e8ab6de0c235",
+      "resource": {
+        "resourceType": "Provenance",
+        "id": "guardian-export-provenance",
+        "meta": {
+          "security": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+              "code": "HTEST",
+              "display": "test health data"
+            }
+          ],
+          "tag": [
+            {
+              "system": "https://guardian.invalid/fhir/CodeSystem/data-freshness",
+              "code": "simulated",
+              "display": "SIMULATED: not a real reading"
+            }
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>SIMULATED</b></p><p>Provenance of this export: episode escalated and 6 observation(s).</p><p>source: Guardian FHIR export (derived); freshness: simulated</p></div>"
+        },
+        "extension": [
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/data-label",
+            "extension": [
+              {
+                "url": "source",
+                "valueString": "Guardian FHIR export (derived)"
+              },
+              {
+                "url": "freshness",
+                "valueCode": "simulated"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-summary",
+            "extension": [
+              {
+                "url": "runLabel",
+                "valueString": "escalated"
+              },
+              {
+                "url": "finalState",
+                "valueString": "RESOLVED"
+              },
+              {
+                "url": "logLabel",
+                "extension": [
+                  {
+                    "url": "source",
+                    "valueString": "simulator"
+                  },
+                  {
+                    "url": "freshness",
+                    "valueCode": "simulated"
+                  }
+                ]
+              },
+              {
+                "url": "headHash",
+                "valueString": "299594c009236cbb4ce03ab4c12194b0ca25ab847dd09121e114f1e26170a82f"
+              },
+              {
+                "url": "chainVerified",
+                "valueBoolean": true
+              },
+              {
+                "url": "chainVerifiedBy",
+                "valueString": "Node engine at proof-export time (not re-verified by this export)"
+              },
+              {
+                "url": "dispatch",
+                "valueString": "DISABLED: NOT SENT (no transport, no network)"
+              },
+              {
+                "url": "entryCount",
+                "valueUnsignedInt": 19
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 0
+              },
+              {
+                "url": "type",
+                "valueCode": "trigger_received"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:30:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "trigger_received"
+              },
+              {
+                "url": "hash",
+                "valueString": "9c8ddd6fb38938b53800d28446b74bd2563c55839f984cb69f21c2590000d613"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 1
+              },
+              {
+                "url": "type",
+                "valueCode": "transition"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:30:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "IDLE -> TRIGGERED"
+              },
+              {
+                "url": "hash",
+                "valueString": "f139f8936ed4dd8be5b84503bed74e7f7b95c96fb81bda47a4fc1c6e1570020b"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 2
+              },
+              {
+                "url": "type",
+                "valueCode": "transition"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:30:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "TRIGGERED -> CANCEL_WINDOW"
+              },
+              {
+                "url": "hash",
+                "valueString": "ea6e0b7cb99e74dcbbf96f75834b22840f32dd20e98ac20901a03903c58fba98"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 3
+              },
+              {
+                "url": "type",
+                "valueCode": "cancel_window_lapsed"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:31:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "cancel_window_lapsed"
+              },
+              {
+                "url": "hash",
+                "valueString": "d8a5f70496d208ad074c6fdb8e4315a69fc3030e45ec6e401ba28bc556102d3b"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 4
+              },
+              {
+                "url": "type",
+                "valueCode": "transition"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:31:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "CANCEL_WINDOW -> CASCADE"
+              },
+              {
+                "url": "hash",
+                "valueString": "31d45880ed60d0adbe2a37fdd4f76c164d98cf0563fcebf4bca9d843dd488c2f"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 5
+              },
+              {
+                "url": "type",
+                "valueCode": "cascade_notify_pending"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:31:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "kin-1"
+              },
+              {
+                "url": "hash",
+                "valueString": "3d498164680e92bcd6a695c733b426c40ff4ad49ca991e01e1090dc489bf9b3e"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 6
+              },
+              {
+                "url": "type",
+                "valueCode": "cascade_notified"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:31:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "kin-1"
+              },
+              {
+                "url": "hash",
+                "valueString": "e83f067ac9fcf68f87a9ed4b191a4b61ace145b8cfa4db60620ae07dc50f6955"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 7
+              },
+              {
+                "url": "type",
+                "valueCode": "cascade_no_response"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:33:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "kin-1"
+              },
+              {
+                "url": "hash",
+                "valueString": "debd2e67b89bbfcbd77cc03bbac9e56a560dc2804d93b8a1413f9c3f6cb187d5"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 8
+              },
+              {
+                "url": "type",
+                "valueCode": "cascade_notify_pending"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:33:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "kin-2"
+              },
+              {
+                "url": "hash",
+                "valueString": "d8f2f45f94bff414ba5bae18ebc1fa4daeafaca5d3ab1b6f63431c6ecacbd478"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 9
+              },
+              {
+                "url": "type",
+                "valueCode": "cascade_notified"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:33:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "kin-2"
+              },
+              {
+                "url": "hash",
+                "valueString": "37afdd925d3dbac4ead9885f0a83389a4b84d3ac1acd6568214c72a78762e430"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 10
+              },
+              {
+                "url": "type",
+                "valueCode": "cascade_no_response"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:35:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "kin-2"
+              },
+              {
+                "url": "hash",
+                "valueString": "51301761681c0220ce32c869974f8202d7f10809633a9fe93d9a2c296ff5a6e2"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 11
+              },
+              {
+                "url": "type",
+                "valueCode": "cascade_notify_pending"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:35:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "kin-3"
+              },
+              {
+                "url": "hash",
+                "valueString": "38b98979ecdcebcda1a3bdeb15166717563c3ab7c03c3ade858f71008d893386"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 12
+              },
+              {
+                "url": "type",
+                "valueCode": "cascade_notified"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:35:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "kin-3"
+              },
+              {
+                "url": "hash",
+                "valueString": "576bed945eae04ee0a869e54d60b6bf31ecfe74397e7587e1431baf8c4d8ea09"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 13
+              },
+              {
+                "url": "type",
+                "valueCode": "cascade_no_response"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:37:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "kin-3"
+              },
+              {
+                "url": "hash",
+                "valueString": "20efbf0acaaed4affe5a309370f9c5ca15c7ff6d047312e6698775d7874cbb1a"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 14
+              },
+              {
+                "url": "type",
+                "valueCode": "transition"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:37:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "CASCADE -> DISPATCH (reason: cascade_exhausted)"
+              },
+              {
+                "url": "hash",
+                "valueString": "7821316e1a23cc7f8b3a108c8fc3b162fee2973c8b96f60b1cbd930c61f7637f"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 15
+              },
+              {
+                "url": "type",
+                "valueCode": "sandbox_payload_built"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:37:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "payload built, sent=false"
+              },
+              {
+                "url": "hash",
+                "valueString": "84f7d6aa0348b295cf74b181e1d3ee77823b55771979aafb148a41c251d1eecb"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 16
+              },
+              {
+                "url": "type",
+                "valueCode": "dispatch_pending"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:37:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "dispatch_pending"
+              },
+              {
+                "url": "hash",
+                "valueString": "dc040d2029e6e0c2d8ebbbd9187c2c60e76860f71dab1f60eb7b9558ed70f3d6"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 17
+              },
+              {
+                "url": "type",
+                "valueCode": "dispatch_result"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:37:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "dispatcher status: disabled (nothing sent)"
+              },
+              {
+                "url": "hash",
+                "valueString": "f00ffc5f4bd1bd27fd2d9d90f72a87f35494a9030f752cfa9fdbf23b385667f5"
+              }
+            ]
+          },
+          {
+            "url": "https://guardian.invalid/fhir/StructureDefinition/episode-log-entry",
+            "extension": [
+              {
+                "url": "seq",
+                "valueUnsignedInt": 18
+              },
+              {
+                "url": "type",
+                "valueCode": "transition"
+              },
+              {
+                "url": "at",
+                "valueDateTime": "2026-11-17T14:37:19.377Z"
+              },
+              {
+                "url": "summary",
+                "valueString": "DISPATCH -> RESOLVED (dispatch step reached, dispatcher disabled: nothing sent)"
+              },
+              {
+                "url": "hash",
+                "valueString": "299594c009236cbb4ce03ab4c12194b0ca25ab847dd09121e114f1e26170a82f"
+              }
+            ]
+          }
+        ],
+        "target": [
+          {
+            "reference": "urn:uuid:4e339eee-224a-5b4d-a740-e328fb2ce754",
+            "type": "Patient",
+            "display": "Synthetic demo wearer"
+          },
+          {
+            "reference": "urn:uuid:6116a605-cb01-515e-9202-ad97a323a1ef",
+            "type": "Observation"
+          },
+          {
+            "reference": "urn:uuid:3013aa5e-6e57-51f7-a1a2-f6d27b292470",
+            "type": "Observation"
+          },
+          {
+            "reference": "urn:uuid:f3be3a10-479c-5910-bf98-c0e87dd7dcb5",
+            "type": "Observation"
+          },
+          {
+            "reference": "urn:uuid:04bc13c8-6ded-564d-8174-26a594245e93",
+            "type": "Observation"
+          },
+          {
+            "reference": "urn:uuid:4a442e56-a7b4-5b7e-8b5e-ec67420c9f2c",
+            "type": "Observation"
+          },
+          {
+            "reference": "urn:uuid:b059b891-9aa7-55c4-acd1-cab602ed7e88",
+            "type": "Observation"
+          }
+        ],
+        "recorded": "2026-11-17T22:42:14.044Z",
+        "agent": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+                  "code": "assembler",
+                  "display": "Assembler"
+                }
+              ]
+            },
+            "who": {
+              "display": "Guardian app, offline FHIR export (no server contacted)"
+            }
+          }
+        ],
+        "entity": [
+          {
+            "role": "source",
+            "what": {
+              "identifier": {
+                "system": "https://guardian.invalid/fhir/event-log-head",
+                "value": "299594c009236cbb4ce03ab4c12194b0ca25ab847dd09121e114f1e26170a82f"
+              },
+              "display": "Guardian episode event log \"escalated\" (simulator; simulated)"
+            }
+          },
+          {
+            "role": "source",
+            "what": {
+              "display": "Health-store adapter observations (simulated)"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

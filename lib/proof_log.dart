@@ -5,8 +5,6 @@
 
 import 'dart:convert';
 
-import 'package:flutter/services.dart' show rootBundle;
-
 const String proofAssetPath = 'assets/episode-log.json';
 
 /// Source/freshness label. A missing label is kept as null so the UI can
@@ -115,7 +113,4 @@ class ProofLog {
           .toList(),
     );
   }
-
-  static Future<ProofLog> loadAsset() async =>
-      ProofLog.parse(await rootBundle.loadString(proofAssetPath));
 }

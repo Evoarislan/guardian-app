@@ -86,6 +86,18 @@ Session 1 burn data before Guardian Session 1 runs.
       (tampered/truncated logs fail, tested). The recorded Node proof
       view is kept and labelled as recorded. Simulated clock only: NOT
       a sensor trigger, NOT a drop test
+- [x] Interactive live rehearsal (Session 4): "Interactive rehearsal"
+      lets the user drive ONE episode of the Dart engine in real time on
+      a SCALED clock (1 real second = 10 episode seconds, stated on
+      screen; engine windows stay the canonical 60 s / 120 s in episode
+      time, so a full unacknowledged run takes about 42 real seconds).
+      "I'm OK" cancels during the cancel window AND mid-cascade
+      (wearer_cancelled, engine back to IDLE); a control labelled
+      SIMULATED kin ack acknowledges the currently notified contact
+      (resolution acknowledged); an untouched run ends at the DISABLED
+      dispatch step. Chain verified in-app for the interactive run.
+      Still simulated everywhere: NOT a sensor trigger, NOT a drop test,
+      no alarm audio or voice prompt yet
 - [ ] PhoneSensorAdapter: accelerometer stream, hard-fall
       signature, inactivity/long-lie pattern, missed check-in
       scheduler; Android foreground service; iOS limitations
@@ -130,13 +142,27 @@ not build them from scratch.
       call anywhere in the code (grep proves it)
 
 ## Phase 5: FHIR record + role views
+- [x] Offline FHIR R4 export (Session 4, PARTIAL Phase 5): lib/fhir
+      turns an episode log + health observations into a FHIR R4
+      collection Bundle (synthetic Patient with no identifiers, LOINC/
+      UCUM-coded Observations, one Provenance carrying the episode log
+      summary). Every resource carries source/freshness (live | fetched
+      + age | simulated) as an extension + meta tag; simulated data also
+      gets v3-ActReason#HTEST and a SIMULATED narrative. Validated
+      OFFLINE against hand-written R4 fixtures (structural checker, not
+      the official validator). Provider view has an "Export FHIR"
+      action; tool/export_fhir.dart writes the same Bundle to a file.
+      NO server round trip: nothing was posted to HAPI or anywhere
 - [ ] FhirRecordWriter: episode + vitals as FHIR R4 (LOINC-coded
       Observations, Patient, Device, Encounter/Flag) to a LOCAL
       HAPI server; read-back into the provider view
 - [ ] Role views completed: wearer, kin (alerts + digest),
       provider (record + export), nutritionist (event-linked
       summary); consent grants enforced at send/render time;
-      revocation tested
+      revocation tested. (Session 4 added only a provider view with
+      the offline "Export FHIR" action: NO consent grants exist yet, so
+      nothing is enforced or revocable. Kin and nutritionist views not
+      started.)
 - [ ] Camera PPG spot check, labelled as a spot check
 - [ ] Verification: judge-shaped run — POST an episode, read it
       back in the provider view, revoke a grant, show the share

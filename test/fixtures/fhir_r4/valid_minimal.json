@@ -1,0 +1,16 @@
+{
+  "_about": "Minimal VALID R4 resources, hand-written from the definitions. The checker must accept every one.",
+  "resources": [
+    {"resourceType": "Patient", "id": "p1", "name": [{"use": "anonymous", "text": "Synthetic"}]},
+    {"resourceType": "Observation", "id": "o1", "status": "final",
+     "code": {"coding": [{"system": "http://loinc.org", "code": "8867-4", "display": "Heart rate"}]},
+     "effectiveDateTime": "2026-11-17T10:00:00Z",
+     "valueQuantity": {"value": 72, "unit": "bpm", "system": "http://unitsofmeasure.org", "code": "/min"}},
+    {"resourceType": "Provenance", "id": "pv1", "recorded": "2026-11-17T10:00:00.123Z",
+     "target": [{"reference": "Patient/p1"}],
+     "agent": [{"who": {"display": "app"}}],
+     "entity": [{"role": "source", "what": {"display": "log"}}]},
+    {"resourceType": "Bundle", "id": "b1", "type": "collection", "timestamp": "2026-11-17T10:00:00Z",
+     "entry": [{"fullUrl": "urn:uuid:11111111-1111-5111-8111-111111111111", "resource": {"resourceType": "Patient", "id": "p1"}}]}
+  ]
+}

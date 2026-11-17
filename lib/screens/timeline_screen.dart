@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../proof_log.dart';
+import '../proof_log_asset.dart';
 import '../rehearsal/proof_episodes.dart';
 import '../widgets/honest_limits.dart';
 
@@ -83,7 +84,9 @@ EntryView describeEntry(LogEntry e, DataLabels runLabels) {
           runLabels);
     case 'cascade_acknowledged':
       return EntryView(
-          'Acknowledged by ${_s(d['contactId'])}', runLabels);
+          'Acknowledged by ${_s(d['contactId'])} (SIMULATED kin acknowledgment; '
+          'no real person was contacted)',
+          runLabels);
     case 'sandbox_payload_built':
       return EntryView(
           'Sandbox alarm payload built and logged. NOT SENT '
@@ -130,7 +133,7 @@ class TimelineScreen extends StatelessWidget {
         children: [
           Expanded(
             child: FutureBuilder<ProofLog>(
-              future: (loader ?? ProofLog.loadAsset)(),
+              future: (loader ?? loadProofLogAsset)(),
               builder: (context, snap) {
                 if (snap.hasError) {
                   return Padding(
@@ -178,7 +181,7 @@ class _ProofView extends StatelessWidget {
           ),
         ),
         for (final run in log.runs)
-          _RunCard(
+          RunCard(
             run: run,
             verifyKey: Key('verify-${run.label}'),
             verifyLine:
@@ -192,22 +195,33 @@ class _ProofView extends StatelessWidget {
   }
 }
 
-class _RunCard extends StatelessWidget {
-  const _RunCard({
+class RunCard extends StatelessWidget {
+  const RunCard({
+    super.key,
     required this.run,
     required this.verifyLine,
     required this.verifyKey,
     this.verifyColor = Colors.white70,
     this.cardKey,
+    this.outcome,
+    this.timeNote,
   });
 
   final ProofRun run;
+
+  /// Overrides the label-derived outcome text (interactive runs).
+  final String? outcome;
+
+  /// Shown under the outcome, e.g. that t+ offsets are scaled episode time.
+  final String? timeNote;
   final String verifyLine;
   final Key verifyKey;
   final Color verifyColor;
   final Key? cardKey;
 
-  String get _outcome => run.label == 'cancelled'
+  String get _outcome => outcome != null
+      ? outcome!
+      : run.label == 'cancelled'
       ? 'Wearer cancelled inside the window. Engine back to IDLE; '
           'cancellation logged.'
       : 'Window lapsed, one ordered cascade pass, no acknowledgment. '
@@ -236,6 +250,13 @@ class _RunCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text('Final engine state: ${run.finalState}',
                 style: const TextStyle(fontSize: 16, color: Colors.white)),
+            if (timeNote != null)
+              Text(timeNote!,
+                  key: const Key('run-time-note'),
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFFFD600))),
             Text(
               verifyLine,
               key: verifyKey,
@@ -332,7 +353,7 @@ ChainCheck verifyLiveRun(EpisodeRun run) {
       '(Dart EventLog.verify() and verify(anchor), run in this app just now).');
 }
 
-ProofRun _toProofRun(EpisodeRun run, bool verified) => ProofRun(
+ProofRun toProofRun(EpisodeRun run, bool verified) => ProofRun(
       label: run.label,
       finalState: run.finalState,
       verifyOk: verified,
@@ -435,8 +456,8 @@ class _LiveTimelineScreenState extends State<LiveTimelineScreen> {
 
   Widget _liveCard(EpisodeRun run) {
     final check = verifyLiveRun(run);
-    return _RunCard(
-      run: _toProofRun(run, check.ok),
+    return RunCard(
+      run: toProofRun(run, check.ok),
       cardKey: Key('live-run-${run.label}'),
       verifyKey: Key('live-verify-${run.label}'),
       verifyLine: check.text,

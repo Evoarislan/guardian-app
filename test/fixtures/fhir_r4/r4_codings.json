@@ -1,0 +1,19 @@
+{
+  "_about": "Coding systems and codes the R4 export must use, typed by hand. LOINC and UCUM codes were looked up once against the public terminology server tx.fhir.org during development (not by app code); the observation-category, v3-ActReason#HTEST and provenance-participant-type codes likewise.",
+  "systems": {
+    "loinc": "http://loinc.org",
+    "ucum": "http://unitsofmeasure.org",
+    "observationCategory": "http://terminology.hl7.org/CodeSystem/observation-category",
+    "actReason": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+    "provenanceParticipantType": "http://terminology.hl7.org/CodeSystem/provenance-participant-type"
+  },
+  "observations": {
+    "heart_rate": {"loinc": "8867-4", "display": "Heart rate", "ucum": "/min", "unit": "bpm", "category": "vital-signs"},
+    "spo2": {"loinc": "59408-5", "display": "Oxygen saturation in Arterial blood by Pulse oximetry", "ucum": "%", "unit": "%", "category": "vital-signs"},
+    "steps": {"loinc": "55423-8", "display": "Number of steps in unspecified time Pedometer", "ucum": "{steps}", "unit": "count", "category": "activity"},
+    "sleep": {"loinc": "93832-4", "display": "Sleep duration", "ucum": "min", "unit": "minutes", "category": "activity"},
+    "resting_heart_rate": {"loinc": "40443-4", "display": "Heart rate --resting", "ucum": "/min", "unit": "bpm", "category": "vital-signs"},
+    "skin_temperature": {"loinc": "61008-9", "display": "Body surface temperature", "ucum": "Cel", "unit": "celsius", "category": "vital-signs"}
+  },
+  "testHealthDataSecurityLabel": {"system": "http://terminology.hl7.org/CodeSystem/v3-ActReason", "code": "HTEST"}
+}

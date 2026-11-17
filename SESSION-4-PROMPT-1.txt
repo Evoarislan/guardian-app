@@ -1,0 +1,20 @@
+Guardian Session 4: interactive live rehearsal + FHIR R4 export. Repo: ~/workspace/guardian-app. Baseline to confirm first: flutter test 49/49, flutter analyze clean, Node engine suite 21/21, tree clean at the Session 3 commit. Do NOT modify the Node engine/ directory or the Dart engine's canonical timing model (cancel window 60s default, then ONE ordered cascade pass with a 120s per-contact ack timeout, dispatch only when the pass exhausts with no ack). No network calls anywhere in app code; the Dart dispatcher stays disabled with no transport.
+
+PART 1 — Make the live rehearsal interactive (closes the Session 3 gap):
+- In the live rehearsal, the wearer can act in real time: "I'm OK" cancels during the cancel window AND during the cascade (any time before the dispatcher would be invoked), and the episode resolves as wearer_cancelled with the correct log entries, matching the engine semantics proven in the Node suite.
+- A kin acknowledgment can be simulated from the UI during the cascade (a control labelled as simulated kin ack for the currently notified contact), resolving the episode as acknowledged.
+- Timing: use a scaled clock (state the scale in the UI, e.g. 1 real second = 10 episode seconds) so a full cascade completes in under a minute of real time, and say plainly on screen that rehearsal time is scaled. The engine's configured durations stay the canonical 60s/120s in episode time.
+- All honesty rules unchanged and test-enforced: SIMULATED labels everywhere, every timeline row labelled source: simulator · freshness: simulated, dispatch rows read DISABLED / NOT SENT, the word "dispatched" never appears on screen as an outcome, chain verification result shown for the interactive run too.
+- Widget tests must cover: cancel inside the window, cancel mid-cascade, kin ack resolving the episode, and a full unacknowledged run reaching the disabled dispatch.
+
+PART 2 — FHIR R4 export (offline; no network):
+- Add an export that turns an episode log plus the health observations already modelled in the adapters into a FHIR R4 Bundle (Patient placeholder with no real identifiers, Observation resources for the vitals, and a Provenance resource). Every resource carries the source/freshness labelling as extensions or Provenance fields: live vs fetched-with-age vs simulated must survive the export, and simulated data must be unmistakably marked.
+- Validate offline: unit tests assert the Bundle structure (resource types, required FHIR R4 fields per resource, coding systems where the spec names them) against fixtures you write from the FHIR R4 definitions. Do NOT post anything to HAPI or any server in this session; export produces a JSON file/string the user could share.
+- The provider view in the app gains an "Export FHIR" action that shows the exported Bundle JSON for the recorded proof episode, labelled simulated.
+
+CLOSE-OUT:
+- flutter analyze clean; flutter test: all previous 49 plus new tests green; Node suite re-run 21/21 untouched.
+- Update .kiro/specs/guardian/tasks.md truthfully.
+- Write SESSION-4-RESULT.md: what was built, test counts before/after, the rehearsal timing scale and how it is disclosed, the FHIR resource map and what validation was and was not done (no server round-trip), remaining gaps (real health-store reads, alarm audio and voice prompt, Android build, on-device runs).
+- Commit in one commit with the message "Session 4: interactive rehearsal + FHIR R4 export". Clean tree. Do NOT push; Muse pushes.
+- Print a summary at the end: test counts, commit hash.
