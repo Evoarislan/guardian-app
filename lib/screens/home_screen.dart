@@ -41,6 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _openLiveRehearsal() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const LiveTimelineScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,17 +102,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 16, color: Colors.white)),
                     ],
                     const SizedBox(height: 8),
-                    OutlinedButton(
-                      key: const Key('open-timeline-button'),
-                      onPressed: _openTimeline,
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        side: const BorderSide(color: Colors.white),
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                      ),
-                      child: const Text(
-                          'View recorded proof run (simulated)',
-                          style: TextStyle(fontSize: 18)),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _SmallButton(
+                            key: const Key('live-rehearsal-button'),
+                            label: 'Live rehearsal\n(Dart engine, simulated)',
+                            onPressed: _openLiveRehearsal,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: _SmallButton(
+                            key: const Key('open-timeline-button'),
+                            label: 'Recorded proof run\n(simulated)',
+                            onPressed: _openTimeline,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -116,6 +129,31 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SmallButton extends StatelessWidget {
+  const _SmallButton({
+    super.key,
+    required this.label,
+    required this.onPressed,
+  });
+
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: onPressed,
+      style: OutlinedButton.styleFrom(
+        foregroundColor: Colors.white,
+        side: const BorderSide(color: Colors.white),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      ),
+      child:
+          Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 15)),
     );
   }
 }

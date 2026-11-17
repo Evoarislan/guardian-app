@@ -1,0 +1,623 @@
+{
+  "schema": "guardian.episode-log/1",
+  "generatedAt": "2026-11-17T21:22:46.503981Z",
+  "banner": "Dart-engine proof run. SIMULATED signals (source=simulator, freshness=simulated). Mock kin notifier, dispatch disabled: nothing was sent. Simulated clock, default windows.",
+  "dataLabels": {
+    "source": "simulator",
+    "freshness": "simulated"
+  },
+  "runs": [
+    {
+      "label": "cancelled",
+      "finalState": "IDLE",
+      "keyedLog": false,
+      "verify": {
+        "ok": true,
+        "failedAt": null
+      },
+      "verifyAnchored": {
+        "ok": true,
+        "failedAt": null
+      },
+      "anchor": {
+        "count": 5,
+        "headHash": "49016dc030a73db39fcd3b31fdaa7100737ec4ad96e24ab91cb595de70ff110f"
+      },
+      "dataLabels": {
+        "source": "simulator",
+        "freshness": "simulated"
+      },
+      "signals": [
+        {
+          "id": "sig-sim-1",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "accel",
+          "value": {
+            "x": 0.02,
+            "y": 0.98,
+            "z": 0.03
+          },
+          "unit": "g",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        },
+        {
+          "id": "sig-sim-2",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "accel",
+          "value": {
+            "x": 0.01,
+            "y": 0.99,
+            "z": 0.02
+          },
+          "unit": "g",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        },
+        {
+          "id": "sig-sim-3",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "accel",
+          "value": {
+            "x": 0.4,
+            "y": 3.2,
+            "z": 0.6
+          },
+          "unit": "g",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        },
+        {
+          "id": "sig-sim-4",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "accel",
+          "value": {
+            "x": 0.0,
+            "y": 0.05,
+            "z": 0.97
+          },
+          "unit": "g",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        },
+        {
+          "id": "sig-sim-5",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "location",
+          "value": {
+            "lat": 43.7615,
+            "lng": -79.4111,
+            "accuracyM": 25
+          },
+          "unit": "deg",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        },
+        {
+          "id": "sig-sim-6",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "accel",
+          "value": {
+            "type": "fall_pattern",
+            "peakG": 3.2
+          },
+          "unit": "g",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        }
+      ],
+      "notifierCalls": [],
+      "dispatchSent": false,
+      "entries": [
+        {
+          "seq": 0,
+          "ts": 1794950566503,
+          "type": "trigger_received",
+          "data": {
+            "episodeId": "ep-i1-1",
+            "triggerType": "fall_pattern",
+            "details": {
+              "signal": {
+                "id": "sig-sim-6",
+                "wearerId": "synthetic-wearer-001",
+                "kind": "accel",
+                "value": {
+                  "type": "fall_pattern",
+                  "peakG": 3.2
+                },
+                "unit": "g",
+                "source": "simulator",
+                "freshness": "simulated",
+                "observedAt": 1794950566503,
+                "receivedAt": 1794950566503
+              }
+            }
+          },
+          "prevHash": "guardian-genesis",
+          "hash": "912f7304a8b2a085b3d82022056097dc39e6581f56824727ec2ef08eba0944a7"
+        },
+        {
+          "seq": 1,
+          "ts": 1794950566503,
+          "type": "transition",
+          "data": {
+            "from": "IDLE",
+            "to": "TRIGGERED",
+            "episodeId": "ep-i1-1",
+            "triggerType": "fall_pattern"
+          },
+          "prevHash": "912f7304a8b2a085b3d82022056097dc39e6581f56824727ec2ef08eba0944a7",
+          "hash": "688d34150831582bb0bb75f0126116578694f75949d912954e23188dac80b68a"
+        },
+        {
+          "seq": 2,
+          "ts": 1794950566503,
+          "type": "transition",
+          "data": {
+            "from": "TRIGGERED",
+            "to": "CANCEL_WINDOW",
+            "episodeId": "ep-i1-1",
+            "cancelWindowMs": 60000
+          },
+          "prevHash": "688d34150831582bb0bb75f0126116578694f75949d912954e23188dac80b68a",
+          "hash": "14382d21411cc10102bcb25f0f04bed595954fe8656108b2e4809b37fc1de373"
+        },
+        {
+          "seq": 3,
+          "ts": 1794950586503,
+          "type": "wearer_cancelled",
+          "data": {
+            "episodeId": "ep-i1-1",
+            "duringState": "CANCEL_WINDOW"
+          },
+          "prevHash": "14382d21411cc10102bcb25f0f04bed595954fe8656108b2e4809b37fc1de373",
+          "hash": "5698be038ab2325bba51b46f6dfe4134921a7680a0467c8e9bc6f88295ccac9d"
+        },
+        {
+          "seq": 4,
+          "ts": 1794950586503,
+          "type": "transition",
+          "data": {
+            "from": "CANCEL_WINDOW",
+            "to": "IDLE",
+            "episodeId": "ep-i1-1",
+            "reason": "wearer_cancelled"
+          },
+          "prevHash": "5698be038ab2325bba51b46f6dfe4134921a7680a0467c8e9bc6f88295ccac9d",
+          "hash": "49016dc030a73db39fcd3b31fdaa7100737ec4ad96e24ab91cb595de70ff110f"
+        }
+      ]
+    },
+    {
+      "label": "escalated",
+      "finalState": "RESOLVED",
+      "keyedLog": false,
+      "verify": {
+        "ok": true,
+        "failedAt": null
+      },
+      "verifyAnchored": {
+        "ok": true,
+        "failedAt": null
+      },
+      "anchor": {
+        "count": 19,
+        "headHash": "baf9cfe85059fdc0293e78cfb58010743003c72fa7ffcd5bbfd4990836711b83"
+      },
+      "dataLabels": {
+        "source": "simulator",
+        "freshness": "simulated"
+      },
+      "signals": [
+        {
+          "id": "sig-sim-1",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "accel",
+          "value": {
+            "x": 0.02,
+            "y": 0.98,
+            "z": 0.03
+          },
+          "unit": "g",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        },
+        {
+          "id": "sig-sim-2",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "accel",
+          "value": {
+            "x": 0.01,
+            "y": 0.99,
+            "z": 0.02
+          },
+          "unit": "g",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        },
+        {
+          "id": "sig-sim-3",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "accel",
+          "value": {
+            "x": 0.4,
+            "y": 3.2,
+            "z": 0.6
+          },
+          "unit": "g",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        },
+        {
+          "id": "sig-sim-4",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "accel",
+          "value": {
+            "x": 0.0,
+            "y": 0.05,
+            "z": 0.97
+          },
+          "unit": "g",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        },
+        {
+          "id": "sig-sim-5",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "location",
+          "value": {
+            "lat": 43.7615,
+            "lng": -79.4111,
+            "accuracyM": 25
+          },
+          "unit": "deg",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        },
+        {
+          "id": "sig-sim-6",
+          "wearerId": "synthetic-wearer-001",
+          "kind": "accel",
+          "value": {
+            "type": "fall_pattern",
+            "peakG": 3.2
+          },
+          "unit": "g",
+          "source": "simulator",
+          "freshness": "simulated",
+          "observedAt": 1794950566503,
+          "receivedAt": 1794950566503
+        }
+      ],
+      "notifierCalls": [
+        {
+          "contactId": "kin-1",
+          "message": "Guardian alert: possible fall pattern for Synthetic demo wearer. Please acknowledge if you are responding.",
+          "location": {
+            "lat": 43.7615,
+            "lng": -79.4111,
+            "accuracyM": 25,
+            "source": "simulator",
+            "freshness": "simulated"
+          }
+        },
+        {
+          "contactId": "kin-2",
+          "message": "Guardian alert: possible fall pattern for Synthetic demo wearer. Please acknowledge if you are responding.",
+          "location": {
+            "lat": 43.7615,
+            "lng": -79.4111,
+            "accuracyM": 25,
+            "source": "simulator",
+            "freshness": "simulated"
+          }
+        },
+        {
+          "contactId": "kin-3",
+          "message": "Guardian alert: possible fall pattern for Synthetic demo wearer. Please acknowledge if you are responding.",
+          "location": {
+            "lat": 43.7615,
+            "lng": -79.4111,
+            "accuracyM": 25,
+            "source": "simulator",
+            "freshness": "simulated"
+          }
+        }
+      ],
+      "dispatchSent": false,
+      "entries": [
+        {
+          "seq": 0,
+          "ts": 1794950566503,
+          "type": "trigger_received",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "triggerType": "fall_pattern",
+            "details": {
+              "signal": {
+                "id": "sig-sim-6",
+                "wearerId": "synthetic-wearer-001",
+                "kind": "accel",
+                "value": {
+                  "type": "fall_pattern",
+                  "peakG": 3.2
+                },
+                "unit": "g",
+                "source": "simulator",
+                "freshness": "simulated",
+                "observedAt": 1794950566503,
+                "receivedAt": 1794950566503
+              }
+            }
+          },
+          "prevHash": "guardian-genesis",
+          "hash": "d84f8a699449c5aa4e4d5be1d6c37cab30e5c64ca50348cb0540c18d8463fcd3"
+        },
+        {
+          "seq": 1,
+          "ts": 1794950566503,
+          "type": "transition",
+          "data": {
+            "from": "IDLE",
+            "to": "TRIGGERED",
+            "episodeId": "ep-i2-1",
+            "triggerType": "fall_pattern"
+          },
+          "prevHash": "d84f8a699449c5aa4e4d5be1d6c37cab30e5c64ca50348cb0540c18d8463fcd3",
+          "hash": "17645d2cb4597b202451b1862ad7e681ccb855605fcae4241a34687ae93b99a2"
+        },
+        {
+          "seq": 2,
+          "ts": 1794950566503,
+          "type": "transition",
+          "data": {
+            "from": "TRIGGERED",
+            "to": "CANCEL_WINDOW",
+            "episodeId": "ep-i2-1",
+            "cancelWindowMs": 60000
+          },
+          "prevHash": "17645d2cb4597b202451b1862ad7e681ccb855605fcae4241a34687ae93b99a2",
+          "hash": "a84b3c1a662243a463aa811a0c868c4a19c3620e1d0e0a9e4fe18850c1c75523"
+        },
+        {
+          "seq": 3,
+          "ts": 1794950626503,
+          "type": "cancel_window_lapsed",
+          "data": {
+            "episodeId": "ep-i2-1"
+          },
+          "prevHash": "a84b3c1a662243a463aa811a0c868c4a19c3620e1d0e0a9e4fe18850c1c75523",
+          "hash": "318119320bfb3292022d5fa9ee1cb107c8b9d9cb0aa005c44e5e4ef4f6403c3d"
+        },
+        {
+          "seq": 4,
+          "ts": 1794950626503,
+          "type": "transition",
+          "data": {
+            "from": "CANCEL_WINDOW",
+            "to": "CASCADE",
+            "episodeId": "ep-i2-1"
+          },
+          "prevHash": "318119320bfb3292022d5fa9ee1cb107c8b9d9cb0aa005c44e5e4ef4f6403c3d",
+          "hash": "59517ca4bb3e918575617c78e8e61a0a824802f13ad38d1d65d741f4c02cd7c6"
+        },
+        {
+          "seq": 5,
+          "ts": 1794950626503,
+          "type": "cascade_notify_pending",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "contactId": "kin-1"
+          },
+          "prevHash": "59517ca4bb3e918575617c78e8e61a0a824802f13ad38d1d65d741f4c02cd7c6",
+          "hash": "3d9f02b849c6bc2555bf9f74bd11dfab5ca8199335445a482944f0ae5c28aa8a"
+        },
+        {
+          "seq": 6,
+          "ts": 1794950626503,
+          "type": "cascade_notified",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "contactId": "kin-1",
+            "delivered": true,
+            "channel": "mock"
+          },
+          "prevHash": "3d9f02b849c6bc2555bf9f74bd11dfab5ca8199335445a482944f0ae5c28aa8a",
+          "hash": "d14ac882129ff67617c0dfe2b79faa527c1ea13a0156e48bf3b810a75ad86039"
+        },
+        {
+          "seq": 7,
+          "ts": 1794950746503,
+          "type": "cascade_no_response",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "contactId": "kin-1",
+            "waitedMs": 120000
+          },
+          "prevHash": "d14ac882129ff67617c0dfe2b79faa527c1ea13a0156e48bf3b810a75ad86039",
+          "hash": "04589934a3f7d97f6775f96161558292ea54275ebcac3038b6a09eb649600fca"
+        },
+        {
+          "seq": 8,
+          "ts": 1794950746503,
+          "type": "cascade_notify_pending",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "contactId": "kin-2"
+          },
+          "prevHash": "04589934a3f7d97f6775f96161558292ea54275ebcac3038b6a09eb649600fca",
+          "hash": "2fe2883cf1a9a99890ee510734d7dbef98938eb412f7fc136f47c0770dd2b0e7"
+        },
+        {
+          "seq": 9,
+          "ts": 1794950746503,
+          "type": "cascade_notified",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "contactId": "kin-2",
+            "delivered": true,
+            "channel": "mock"
+          },
+          "prevHash": "2fe2883cf1a9a99890ee510734d7dbef98938eb412f7fc136f47c0770dd2b0e7",
+          "hash": "f182db1a699d5de1c5cce3e2ed4dc02727f25bf81011788ebc659276aa0614da"
+        },
+        {
+          "seq": 10,
+          "ts": 1794950866503,
+          "type": "cascade_no_response",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "contactId": "kin-2",
+            "waitedMs": 120000
+          },
+          "prevHash": "f182db1a699d5de1c5cce3e2ed4dc02727f25bf81011788ebc659276aa0614da",
+          "hash": "9cbabc5a7ce7473922ffe72f93e0571d7a3ee37677face28254cd15db873daa0"
+        },
+        {
+          "seq": 11,
+          "ts": 1794950866503,
+          "type": "cascade_notify_pending",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "contactId": "kin-3"
+          },
+          "prevHash": "9cbabc5a7ce7473922ffe72f93e0571d7a3ee37677face28254cd15db873daa0",
+          "hash": "eea34c024c17530d7e9173df588193ddd9f2af032ac75385ff650d40f4630dd5"
+        },
+        {
+          "seq": 12,
+          "ts": 1794950866503,
+          "type": "cascade_notified",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "contactId": "kin-3",
+            "delivered": true,
+            "channel": "mock"
+          },
+          "prevHash": "eea34c024c17530d7e9173df588193ddd9f2af032ac75385ff650d40f4630dd5",
+          "hash": "4721aa4c743e6d6a1ab63ddbcd6a590a3afb025fdc2dbad4bc0cb5ddace03e04"
+        },
+        {
+          "seq": 13,
+          "ts": 1794950986503,
+          "type": "cascade_no_response",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "contactId": "kin-3",
+            "waitedMs": 120000
+          },
+          "prevHash": "4721aa4c743e6d6a1ab63ddbcd6a590a3afb025fdc2dbad4bc0cb5ddace03e04",
+          "hash": "aef32decd3d3bfd494f6541534a9ae6e71afce7ad28225f99cf9dd707a093b8b"
+        },
+        {
+          "seq": 14,
+          "ts": 1794950986503,
+          "type": "transition",
+          "data": {
+            "from": "CASCADE",
+            "to": "DISPATCH",
+            "episodeId": "ep-i2-1",
+            "reason": "cascade_exhausted"
+          },
+          "prevHash": "aef32decd3d3bfd494f6541534a9ae6e71afce7ad28225f99cf9dd707a093b8b",
+          "hash": "57eb719987dbb2c2e875ede2090e07d2ba1b2bbb1357f9dc74533d4147518e6c"
+        },
+        {
+          "seq": 15,
+          "ts": 1794950986503,
+          "type": "sandbox_payload_built",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "endpoint": "https://api-sandbox.noonlight.com/dispatch/v1/alarms",
+            "sent": false,
+            "reason": "dispatch disabled in this build: no token, no transport, no network call",
+            "dataLabels": {
+              "source": "simulator",
+              "freshness": "simulated"
+            },
+            "payload": {
+              "services": {
+                "police": false,
+                "fire": false,
+                "medical": true
+              },
+              "location": {
+                "coords": {
+                  "lat": 43.7615,
+                  "lng": -79.4111,
+                  "accuracy": 25
+                }
+              },
+              "name": "Synthetic demo wearer",
+              "instructions": "Guardian escalation: fall_pattern. Wearer did not cancel and no kin contact acknowledged.",
+              "_guardian": {
+                "episodeId": "ep-i2-1",
+                "source": "guardian-engine"
+              }
+            }
+          },
+          "prevHash": "57eb719987dbb2c2e875ede2090e07d2ba1b2bbb1357f9dc74533d4147518e6c",
+          "hash": "047859d702a1c06a5fcaaa4b068034eb687e5a91e96cd93c944b62e3c45bc986"
+        },
+        {
+          "seq": 16,
+          "ts": 1794950986503,
+          "type": "dispatch_pending",
+          "data": {
+            "episodeId": "ep-i2-1"
+          },
+          "prevHash": "047859d702a1c06a5fcaaa4b068034eb687e5a91e96cd93c944b62e3c45bc986",
+          "hash": "4170e1b0417597494116f037efd66a625128004968f0efcd097cd5ebf46cb041"
+        },
+        {
+          "seq": 17,
+          "ts": 1794950986503,
+          "type": "dispatch_result",
+          "data": {
+            "episodeId": "ep-i2-1",
+            "status": "disabled",
+            "reference": null
+          },
+          "prevHash": "4170e1b0417597494116f037efd66a625128004968f0efcd097cd5ebf46cb041",
+          "hash": "eb17a8b921b400647326280e9b19ecc91abd43c92c4beae5fc0d9894be9bc79f"
+        },
+        {
+          "seq": 18,
+          "ts": 1794950986503,
+          "type": "transition",
+          "data": {
+            "from": "DISPATCH",
+            "to": "RESOLVED",
+            "episodeId": "ep-i2-1",
+            "resolution": "dispatched",
+            "dispatchStatus": "disabled"
+          },
+          "prevHash": "eb17a8b921b400647326280e9b19ecc91abd43c92c4beae5fc0d9894be9bc79f",
+          "hash": "baf9cfe85059fdc0293e78cfb58010743003c72fa7ffcd5bbfd4990836711b83"
+        }
+      ]
+    }
+  ]
+}

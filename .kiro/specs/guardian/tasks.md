@@ -70,6 +70,22 @@ Session 1 burn data before Guardian Session 1 runs.
       the Node reference implementation in engine/ (its suite is
       mirrored case-for-case; the Node engine stays the verified
       reference)
+- [x] Dart proof runner (Session 3): tool/run_proof.dart replays both
+      proof episodes (cancelled, escalated) through lib/engine with the
+      same simulated inputs as integration/run-proof.js and exports
+      proofs/episode-log.dart.json; test/dart_proof_parity_test.dart
+      cross-checks it STRUCTURALLY against the Node export (entry
+      types and order, transitions, resolutions, labels, payloads;
+      not timestamps or hashes). Node's own EventLog also verifies the
+      Dart artifact's chains
+- [x] Shell wired to the Dart engine (Session 3): home -> "Live
+      rehearsal" runs both episodes in-process on the Dart engine
+      (simulator adapter, MockNotifier, DISABLED dispatcher,
+      FakeScheduler fast-forward); the live timeline renders that log
+      and re-verifies each hash chain in-app with the Dart EventLog
+      (tampered/truncated logs fail, tested). The recorded Node proof
+      view is kept and labelled as recorded. Simulated clock only: NOT
+      a sensor trigger, NOT a drop test
 - [ ] PhoneSensorAdapter: accelerometer stream, hard-fall
       signature, inactivity/long-lie pattern, missed check-in
       scheduler; Android foreground service; iOS limitations

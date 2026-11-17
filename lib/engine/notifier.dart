@@ -8,8 +8,6 @@
 // NO real messaging happens here. Twilio wiring belongs behind this
 // interface in a later, separately reviewed step.
 
-import 'package:flutter/foundation.dart' show debugPrint;
-
 class Contact {
   const Contact({required this.id, required this.name, this.phone});
   final String id;
@@ -60,7 +58,10 @@ abstract class Notifier {
 class ConsoleNotifier implements Notifier {
   @override
   Future<NotifyResult> notify(Contact contact, Alert alert) async {
-    debugPrint(
+    // print (not Flutter's debugPrint) keeps lib/engine free of Flutter
+    // imports so the Dart proof runner can run under plain `dart run`.
+    // ignore: avoid_print
+    print(
         '[guardian:notifier] -> ${contact.name} (${contact.id}): ${alert.message}');
     return const NotifyResult(delivered: true, channel: 'console');
   }

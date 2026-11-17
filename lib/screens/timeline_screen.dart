@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../proof_log.dart';
+import '../rehearsal/proof_episodes.dart';
 import '../widgets/honest_limits.dart';
 
 /// Plain-language view of one log entry, plus its data label.
@@ -176,16 +177,35 @@ class _ProofView extends StatelessWidget {
                 fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
-        for (final run in log.runs) _RunCard(run: run),
+        for (final run in log.runs)
+          _RunCard(
+            run: run,
+            verifyKey: Key('verify-${run.label}'),
+            verifyLine:
+                'Log chain check, run by the Node engine at export time: '
+                '${run.verifyOk && run.verifyAnchoredOk ? 'OK' : 'FAILED'} '
+                '(head ${run.headHash.substring(0, 10)}…). '
+                'This app does not re-verify the chain.',
+          ),
       ],
     );
   }
 }
 
 class _RunCard extends StatelessWidget {
-  const _RunCard({required this.run});
+  const _RunCard({
+    required this.run,
+    required this.verifyLine,
+    required this.verifyKey,
+    this.verifyColor = Colors.white70,
+    this.cardKey,
+  });
 
   final ProofRun run;
+  final String verifyLine;
+  final Key verifyKey;
+  final Color verifyColor;
+  final Key? cardKey;
 
   String get _outcome => run.label == 'cancelled'
       ? 'Wearer cancelled inside the window. Engine back to IDLE; '
@@ -197,7 +217,7 @@ class _RunCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final t0 = run.entries.first.ts;
     return Card(
-      key: Key('run-${run.label}'),
+      key: cardKey ?? Key('run-${run.label}'),
       color: const Color(0xFF212121),
       margin: const EdgeInsets.only(top: 16),
       child: Padding(
@@ -217,12 +237,9 @@ class _RunCard extends StatelessWidget {
             Text('Final engine state: ${run.finalState}',
                 style: const TextStyle(fontSize: 16, color: Colors.white)),
             Text(
-              'Log chain check, run by the Node engine at export time: '
-              '${run.verifyOk && run.verifyAnchoredOk ? 'OK' : 'FAILED'} '
-              '(head ${run.headHash.substring(0, 10)}…). '
-              'This app does not re-verify the chain.',
-              key: Key('verify-${run.label}'),
-              style: const TextStyle(fontSize: 14, color: Colors.white70),
+              verifyLine,
+              key: verifyKey,
+              style: TextStyle(fontSize: 14, color: verifyColor),
             ),
             const Divider(color: Colors.white54),
             for (final e in run.entries)
@@ -275,6 +292,155 @@ class _EntryRow extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+// ------------------------------------------------------------------
+// Live rehearsal (Dart engine, in-process, simulated clock)
+// ------------------------------------------------------------------
+
+/// Runs the two proof episodes through the Dart engine. Test seam.
+typedef RehearsalRunner = Future<List<EpisodeRun>> Function();
+
+Future<List<EpisodeRun>> runLiveRehearsal() =>
+    runProofEpisodes(startAt: DateTime.now().millisecondsSinceEpoch);
+
+/// In-app chain verification of one live run, using the Dart EventLog
+/// verify() on the log object itself (and against the anchor captured
+/// when the run finished, so truncation is caught too).
+class ChainCheck {
+  const ChainCheck(this.ok, this.text);
+  final bool ok;
+  final String text;
+}
+
+ChainCheck verifyLiveRun(EpisodeRun run) {
+  final plain = run.log.verify();
+  if (!plain.ok) {
+    return ChainCheck(false,
+        'CHAIN VERIFICATION FAILED at entry #${plain.failedAt} (Dart EventLog.verify(), run in this app).');
+  }
+  final anchored = run.log.verify(run.anchor);
+  if (!anchored.ok) {
+    return ChainCheck(false,
+        'CHAIN VERIFICATION FAILED against the anchor at entry #${anchored.failedAt} (Dart EventLog.verify(anchor), run in this app).');
+  }
+  final head = run.anchor.headHash.substring(0, 10);
+  return ChainCheck(true,
+      'chain verified: ${run.log.entries.length} entries, head $head… '
+      '(Dart EventLog.verify() and verify(anchor), run in this app just now).');
+}
+
+ProofRun _toProofRun(EpisodeRun run, bool verified) => ProofRun(
+      label: run.label,
+      finalState: run.finalState,
+      verifyOk: verified,
+      verifyAnchoredOk: verified,
+      labels: DataLabels.fromJson(run.dataLabels),
+      entries: run.log.entries
+          .map((e) => LogEntry(
+              seq: e.seq, ts: e.ts, type: e.type, data: e.data, hash: e.hash))
+          .toList(),
+      dispatchSent: false,
+      headHash: run.anchor.headHash,
+    );
+
+/// Timeline of a LIVE rehearsal: the Dart engine runs both episodes
+/// in-process on a fast-forwarded simulated clock, and this screen renders
+/// the log those engines just wrote, then verifies each hash chain.
+class LiveTimelineScreen extends StatefulWidget {
+  const LiveTimelineScreen({super.key, this.runner});
+
+  /// Test seam; defaults to the real Dart-engine rehearsal.
+  final RehearsalRunner? runner;
+
+  @override
+  State<LiveTimelineScreen> createState() => _LiveTimelineScreenState();
+}
+
+class _LiveTimelineScreenState extends State<LiveTimelineScreen> {
+  late final Future<List<EpisodeRun>> _future;
+  final Stopwatch _clock = Stopwatch();
+
+  @override
+  void initState() {
+    super.initState();
+    _clock.start();
+    _future = (widget.runner ?? runLiveRehearsal)().whenComplete(_clock.stop);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Live rehearsal (Dart engine) — SIMULATED',
+            key: Key('live-timeline-title')),
+        backgroundColor: const Color(0xFF263238),
+        foregroundColor: Colors.white,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: FutureBuilder<List<EpisodeRun>>(
+              future: _future,
+              builder: (context, snap) {
+                if (snap.hasError) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      'The live rehearsal failed: ${snap.error}',
+                      key: const Key('live-timeline-error'),
+                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  );
+                }
+                if (!snap.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return ListView(
+                  padding: const EdgeInsets.all(12),
+                  children: [
+                    Container(
+                      key: const Key('live-banner'),
+                      padding: const EdgeInsets.all(12),
+                      color: const Color(0xFFFFD600),
+                      child: Text(
+                        'LIVE REHEARSAL, SIMULATED. Run just now, in this app, '
+                        'by the Dart engine. Signals are simulated '
+                        '(source=simulator, freshness=simulated). Kin '
+                        'notifications are mock: nothing was sent. Dispatch is '
+                        'DISABLED (no transport): NOT SENT. The default windows '
+                        '(cancel ${cancelWindowSeconds}s, per-contact '
+                        '${ackTimeoutSeconds}s) ran on a fast-forwarded '
+                        'simulated clock, in about ${_clock.elapsedMilliseconds} '
+                        'ms of real time.',
+                        style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    for (final run in snap.data!) _liveCard(run),
+                  ],
+                );
+              },
+            ),
+          ),
+          const HonestLimitsBar(),
+        ],
+      ),
+    );
+  }
+
+  Widget _liveCard(EpisodeRun run) {
+    final check = verifyLiveRun(run);
+    return _RunCard(
+      run: _toProofRun(run, check.ok),
+      cardKey: Key('live-run-${run.label}'),
+      verifyKey: Key('live-verify-${run.label}'),
+      verifyLine: check.text,
+      verifyColor: check.ok ? const Color(0xFF69F0AE) : const Color(0xFFFF5252),
     );
   }
 }

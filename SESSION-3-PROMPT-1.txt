@@ -1,0 +1,19 @@
+Guardian Session 3: Dart proof runner + wire the Flutter shell to the Dart engine. Repo: ~/workspace/guardian-app. Baseline you must confirm first: flutter test 36/36, Node engine suite 21/21, flutter analyze clean, git tree clean at the Session 2 commit. Do NOT modify the Node engine/ directory. No network calls anywhere; the Dart dispatcher stays disabled by default with no transport; lib/engine imports neither dart:io nor any HTTP package.
+
+PART 1 — Dart proof runner (closes the Session 2 gap "no Dart proof runner exists"):
+- Add a Dart proof runner (tool/ or integration/ in Dart, your call, but NOT inside lib/engine) that replays BOTH proof episodes (cancelled and escalated) through the Dart engine in lib/engine using the same simulated inputs as integration/run-proof.js, and exports a JSON episode log in the same shape as proofs/episode-log.json.
+- Add a test that cross-checks the Dart export against proofs/episode-log.json STRUCTURALLY: same episodes, same entry types in the same order, same state transitions and resolutions. Timestamps and hash values will differ; do not compare those. The point is behavioural parity of the replay, proven by a runner artifact, not only by unit tests.
+- The runner must label every record source=simulator / freshness=simulated exactly as the Node proof does.
+
+PART 2 — Wire the shell to the Dart engine (live rehearsal):
+- The timeline screen currently renders only the recorded Node proof (assets/episode-log.json). Keep that view, labelled as the recorded proof run.
+- Add a live rehearsal: from the home screen's rehearsal path, the app runs an episode through the DART engine in-process (simulator adapter + the engine's mock notifier and the disabled dispatcher), fast-forwarded with the Dart FakeScheduler equivalent so the full cascade completes in seconds of real time. The timeline then renders THIS live log.
+- Honesty rules, unchanged and test-enforced: every row labelled source: simulator · freshness: simulated (missing label renders the red UNLABELLED state); the escalated dispatch rows read DISABLED / NOT SENT; the engine's internal "dispatched" resolution wording never appears on screen; the SIMULATED labels stay on every screen.
+- Add in-app chain verification: after a live run, the app verifies the episode's hash chain using the Dart EventLog verify() and shows the result on the timeline ("chain verified" or the failure). A test must cover a tampered log failing verification in-app.
+
+PART 3 — Close-out:
+- flutter analyze clean; flutter test: all previous 36 plus your new tests green; Node suite re-run 21/21 untouched; grep proofs that no network/HTTP imports entered lib/ or the runner.
+- Update .kiro/specs/guardian/tasks.md truthfully.
+- Write SESSION-3-RESULT.md: what was built, test counts before/after, the structural cross-check result, what is still NOT done (real adapters, alarm audio and voice prompt on the cancel screen, Android build), and any discrepancy you found between the Dart and Node replays.
+- Commit everything in one commit with the message "Session 3: Dart proof runner + live rehearsal wired to Dart engine". Clean tree. Do NOT push; Muse pushes.
+- Print a summary at the end: test counts, cross-check result, commit hash.
