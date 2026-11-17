@@ -66,7 +66,7 @@ Session 1 burn data before Guardian Session 1 runs.
       stubs
 
 ## Phase 2: Sensor layer, phone first
-- [ ] Dart port of the escalation engine with test-parity against
+- [x] Dart port of the escalation engine with test-parity against
       the Node reference implementation in engine/ (its suite is
       mirrored case-for-case; the Node engine stays the verified
       reference)
