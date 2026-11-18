@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../adapters/health_store.dart';
+import '../consent/consent.dart';
 import '../fhir/fhir_export.dart';
 import '../proof_log.dart';
 import '../proof_log_asset.dart';
@@ -11,7 +12,16 @@ import '../widgets/honest_limits.dart';
 /// FHIR": an OFFLINE FHIR R4 Bundle built in memory and shown as JSON.
 /// Nothing is posted anywhere.
 class ProviderScreen extends StatefulWidget {
-  const ProviderScreen({super.key, this.loader, this.observations, this.now});
+  const ProviderScreen({
+    super.key,
+    this.loader,
+    this.observations,
+    this.now,
+    this.consent,
+  });
+
+  /// Test seam; defaults to the app-wide store from [ConsentScope].
+  final ConsentStore? consent;
 
   /// Test seams: proof log, observation source, clock.
   final Future<ProofLog> Function()? loader;
@@ -37,7 +47,24 @@ class _ProviderScreenState extends State<ProviderScreen> {
         () => MockHealthStoreAdapter().readObservations())();
   }
 
+  ConsentStore? get _consent =>
+      widget.consent ?? ConsentScope.maybeOf(context);
+
+  /// Enforcement: no active provider fhir_export grant, no export. The
+  /// bundle is not built, so nothing exists to leak.
   Future<void> _export() async {
+    final store = _consent;
+    if (store == null ||
+        !store.isGranted(ConsentRole.provider, ConsentDataClass.fhirExport)) {
+      setState(() {
+        _json = null;
+        _error =
+            'Export refused: you have not allowed your provider to receive '
+            'FHIR exports (or you stopped it). Nothing was built. Allow it '
+            'on the "Who can see what" screen first.';
+      });
+      return;
+    }
     try {
       final log = await _log;
       final obs = await _obs;
@@ -123,9 +150,10 @@ class _ProviderScreenState extends State<ProviderScreen> {
             'SIMULATED RECORD. Synthetic demo wearer; simulated signals and '
             'readings (source=simulator / simulated, freshness=simulated). '
             'Not a real person. Not a medical record. Guardian is a consumer '
-            'safety aid, not a medical device. Consent grants are NOT '
-            'implemented in this build: the export contains only the '
-            'synthetic demo wearer, and nothing is sent anywhere.',
+            'safety aid, not a medical device. Export works only while you '
+            'have allowed your provider to receive FHIR exports (Consent '
+            'screen; local demo state). Even then the export contains only '
+            'the synthetic demo wearer, and nothing is sent anywhere.',
             style: TextStyle(
               fontSize: 16,
               color: Colors.black,

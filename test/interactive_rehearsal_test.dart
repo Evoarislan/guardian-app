@@ -9,6 +9,7 @@
 // the engine is invoked inside tester.runAsync (see _tap).
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:guardian_app/consent/consent.dart';
 import 'package:guardian_app/engine/guardian_engine.dart';
 import 'package:guardian_app/main.dart';
 import 'package:guardian_app/rehearsal/interactive_rehearsal.dart';
@@ -20,6 +21,10 @@ import 'package:material_ui/material_ui.dart';
 
 const _labelRow = 'source: simulator · freshness: simulated';
 
+/// Kin alerts allowed (the Session 4 behaviour these tests were written for).
+ConsentStore _granted() =>
+    ConsentStore()..grant(ConsentRole.kin, ConsentDataClass.alerts);
+
 class _Rig {
   _Rig(this.tester, this.fake);
   final WidgetTester tester;
@@ -29,7 +34,7 @@ class _Rig {
 
   InteractiveRehearsal create() {
     scaled = ScaledScheduler(inner: fake, scale: 10, startAt: 5000000);
-    return ctl = InteractiveRehearsal(scheduler: scaled);
+    return ctl = InteractiveRehearsal(consent: _granted(), scheduler: scaled);
   }
 
   /// Advance REAL milliseconds (10x episode time) and rebuild.
@@ -133,6 +138,7 @@ void main() {
 
     test('engine keeps canonical 60 s / 120 s durations under the scale', () {
       final c = InteractiveRehearsal(
+          consent: _granted(),
           scheduler: ScaledScheduler(inner: FakeScheduler(0), scale: 10));
       expect(c.engine.cancelWindowMs, 60000);
       expect(c.engine.cascadeAckTimeoutMs, 120000);
@@ -154,6 +160,7 @@ void main() {
         () async {
       var notified = 0;
       final c = InteractiveRehearsal(
+          consent: _granted(),
           scheduler: ScaledScheduler(scale: 100)); // RealScheduler inside
       c.addListener(() => notified++);
       c.simulateFall();
@@ -169,7 +176,7 @@ void main() {
     });
 
     test('cancel mid-cascade and simulated ack on real timers', () async {
-      final a = InteractiveRehearsal(scheduler: ScaledScheduler(scale: 100));
+      final a = InteractiveRehearsal(consent: _granted(), scheduler: ScaledScheduler(scale: 100));
       a.simulateFall();
       await until(() => a.inCascade);
       expect(a.currentContact?.id, 'kin-1');
@@ -180,7 +187,7 @@ void main() {
       expect(a.notifier.calls.length, 1);
       a.dispose();
 
-      final b = InteractiveRehearsal(scheduler: ScaledScheduler(scale: 100));
+      final b = InteractiveRehearsal(consent: _granted(), scheduler: ScaledScheduler(scale: 100));
       b.simulateFall();
       await until(() => b.inCascade);
       expect(b.simulateKinAck(), isTrue);

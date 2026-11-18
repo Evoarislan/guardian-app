@@ -96,8 +96,21 @@ Session 1 burn data before Guardian Session 1 runs.
       SIMULATED kin ack acknowledges the currently notified contact
       (resolution acknowledged); an untouched run ends at the DISABLED
       dispatch step. Chain verified in-app for the interactive run.
-      Still simulated everywhere: NOT a sensor trigger, NOT a drop test,
-      no alarm audio or voice prompt yet
+      Still simulated everywhere: NOT a sensor trigger, NOT a drop test
+- [x] Alarm + voice prompt (Session 5, Part 1): AlarmService interface;
+      DeviceAlarmService (audioplayers + flutter_tts, both resolved)
+      and a labelled silent fallback used in tests. Alarm starts at
+      trigger, stops on cancel / mid-cascade cancel / kin ack /
+      resolution / dispose; voice prompt names "I'm OK". Tested with a
+      mock. NO real sound was produced or heard: the VM has no audio
+      device, so real playback is UNVERIFIED until run on a phone
+- [x] Consent grants (Session 5, Part 2): lib/consent. Per role x data
+      class, deny by default, hash-chained consent log with plain-
+      language history, Consent screen ("Who can see what"). Enforced:
+      FHIR export refuses without provider/fhir_export grant, and after
+      revoke; kin alerts gated at the notifier boundary with
+      kin_notification_skipped (consent_not_granted) logged. Grants are
+      in-memory LOCAL DEMO STATE, lost on app close
 - [ ] PhoneSensorAdapter: accelerometer stream, hard-fall
       signature, inactivity/long-lie pattern, missed check-in
       scheduler; Android foreground service; iOS limitations
@@ -159,10 +172,10 @@ not build them from scratch.
 - [ ] Role views completed: wearer, kin (alerts + digest),
       provider (record + export), nutritionist (event-linked
       summary); consent grants enforced at send/render time;
-      revocation tested. (Session 4 added only a provider view with
-      the offline "Export FHIR" action: NO consent grants exist yet, so
-      nothing is enforced or revocable. Kin and nutritionist views not
-      started.)
+      revocation tested. (PARTIAL: Session 5 added consent grants,
+      revocation and enforcement for provider FHIR export and kin
+      alerts, all tested, in-memory only. Kin view and nutritionist
+      view not started; vitals_digest grants are recorded only.)
 - [ ] Camera PPG spot check, labelled as a spot check
 - [ ] Verification: judge-shaped run — POST an episode, read it
       back in the provider view, revoke a grant, show the share

@@ -36,6 +36,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   crypto: ^3.0.8
+  audioplayers: ^6.8.1
+  flutter_tts: ^4.2.5
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +66,7 @@ flutter:
   # the two copies differ.
   assets:
     - assets/episode-log.json
+    - assets/alarm.wav
 
   # To add assets to your application, add an assets section, like this:
   # assets:

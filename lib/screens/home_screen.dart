@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../widgets/honest_limits.dart';
 import 'cancel_window_screen.dart';
+import 'consent_screen.dart';
 import 'interactive_rehearsal_screen.dart';
 import 'provider_screen.dart';
 import 'timeline_screen.dart';
@@ -53,6 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
           builder: (_) => const InteractiveRehearsalScreen()),
+    );
+  }
+
+  void _openConsent() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const ConsentScreen()),
     );
   }
 
@@ -150,6 +157,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             key: const Key('provider-view-button'),
                             label: 'Provider\nview',
                             onPressed: _openProvider,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: _SmallButton(
+                            key: const Key('consent-button'),
+                            label: 'Who can\nsee what',
+                            onPressed: _openConsent,
                           ),
                         ),
                       ],

@@ -1,0 +1,17 @@
+Guardian Session 5 RESUME. The first Session 5 run died mid-work on a Kiro service connection reset (after six model-load failures) and left substantial UNCOMMITTED work in the tree. Your job: inventory it, keep what is sound, finish the session exactly as SESSION-5-PROMPT-1.txt specifies, and close it out. Read SESSION-5-PROMPT-1.txt first — it is the full spec for both parts (Part 1 alarm + voice; Part 2 consent grants enforced) and all its rules and prohibitions still bind.
+
+What the dead run left (verify each item yourself, do not trust this list):
+- New: lib/rehearsal/alarm_service.dart, lib/rehearsal/device_alarm_service.dart, lib/rehearsal/consent_gated_notifier.dart, assets/alarm.wav, lib/consent/ (directory), lib/screens/consent_screen.dart
+- Modified: lib/rehearsal/interactive_rehearsal.dart, lib/screens/interactive_rehearsal_screen.dart, lib/screens/timeline_screen.dart, pubspec.yaml, pubspec.lock (plugins were being resolved)
+- A stray file named `.probe` at repo root: it is a leftover probe artifact, DELETE it; it must not be committed.
+- No SESSION-5-RESULT.md, no commit. HEAD is still d7ac1d8 (Session 4).
+
+Resume rules:
+1. Start by running git status and reading the partial files. Decide per file: sound and spec-conforming (keep), incomplete (finish), or wrong (fix or rewrite). Say in the result file what you kept, finished, or redid.
+2. Run flutter analyze and flutter test EARLY to learn the true state of the partial work before building further on it.
+3. Complete everything SESSION-5-PROMPT-1.txt requires, including: alarm start/stop wiring across trigger, cancel-in-window, mid-cascade cancel, kin ack, and resolution; the voice prompt; consent model + hash-chained consent log + Consent screen; FHIR export enforcement (refuse without provider grant, allow with it, refuse again after revoke); kin-alert consent gating at the notifier boundary with the skip logged; the full test set for both parts; all prior tests green (was 92/92 at Session 4).
+4. The plugin question from the original prompt still applies: state plainly in the result file whether audioplayers / flutter_tts resolved and are used, or whether the device alarm service is a labelled no-sound fallback, and whether real sound was produced anywhere (the VM has no audio device).
+5. Close out exactly as the original prompt says: SESSION-5-RESULT.md (including an incident note about the interrupted first run and this resume), tasks.md updated truthfully, one commit "Session 5: alarm + voice prompt, consent grants enforced", NO push (Muse verifies and pushes).
+6. engine/ and lib/engine/ stay unmodified; show the empty diff in the result file. Node engine tests still 21/21.
+
+If the environment or the Kiro service fails again mid-session, stop, leave the tree consistent, and report exactly what is done and what is not. Do not commit unverified work.

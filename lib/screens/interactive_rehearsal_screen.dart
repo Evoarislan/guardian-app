@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:material_ui/material_ui.dart';
 
+import '../consent/consent.dart';
+import '../rehearsal/device_alarm_service.dart';
 import '../rehearsal/interactive_rehearsal.dart';
 import '../rehearsal/proof_episodes.dart';
 import '../rehearsal/scaled_scheduler.dart';
@@ -46,7 +48,12 @@ class _InteractiveRehearsalScreenState
   }
 
   InteractiveRehearsal _make() {
-    final c = (widget.create ?? InteractiveRehearsal.new)();
+    final c = (widget.create ??
+        () => InteractiveRehearsal(
+          alarm: defaultAlarmService(),
+          consent: context.getInheritedWidgetOfExactType<ConsentScope>()
+              ?.notifier,
+        ))();
     c.addListener(_onChange);
     return c;
   }
@@ -160,6 +167,10 @@ class _InteractiveRehearsalScreenState
                   ),
                 ),
                 const SizedBox(height: 12),
+                _consentLine(c),
+                const SizedBox(height: 8),
+                _alarmLine(c),
+                const SizedBox(height: 12),
                 _controls(c, scale),
                 if (c.started) _timeline(c, scale),
               ],
@@ -167,6 +178,40 @@ class _InteractiveRehearsalScreenState
           ),
           const HonestLimitsBar(),
         ],
+      ),
+    );
+  }
+
+  Widget _consentLine(InteractiveRehearsal c) {
+    final ok = c.consent.isGranted(ConsentRole.kin, ConsentDataClass.alerts);
+    return Text(
+      ok
+          ? 'Consent: you have allowed kin to receive emergency alerts '
+                '(local demo state). The cascade will notify kin (mock).'
+          : 'Consent: you have NOT allowed kin to receive emergency alerts '
+                '(local demo state). The cascade will SKIP kin and log '
+                'consent_not_granted. Change it on the Consent screen.',
+      key: const Key('rehearsal-consent-line'),
+      style: TextStyle(
+        fontSize: 16,
+        color: ok ? Colors.white : const Color(0xFFFFD600),
+      ),
+    );
+  }
+
+  Widget _alarmLine(InteractiveRehearsal c) {
+    final a = c.alarm;
+    final state = a.isSounding ? 'ALARM ON' : 'Alarm off';
+    return Text(
+      '$state. ${a.description}'
+      '${a.lastError == null ? '' : ' ERROR: ${a.lastError}'}',
+      key: const Key('rehearsal-alarm-line'),
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: a.lastError != null || !a.canProduceSound
+            ? const Color(0xFFFF5252)
+            : Colors.white,
       ),
     );
   }
@@ -275,7 +320,16 @@ class _InteractiveRehearsalScreenState
             ),
           ),
         ),
-        if (c.inCascade && contact != null) ...[
+        if (c.inCascade && contact != null && c.currentContactSkipped) ...[
+          const SizedBox(height: 12),
+          Text(
+            '${contact.id} was NOT contacted (consent_not_granted), so '
+            'nobody can acknowledge. Waiting out the canonical '
+            'acknowledgment timeout.',
+            key: const Key('rehearsal-skipped-note'),
+            style: const TextStyle(fontSize: 18, color: Color(0xFFFFD600)),
+          ),
+        ] else if (c.inCascade && contact != null) ...[
           const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,

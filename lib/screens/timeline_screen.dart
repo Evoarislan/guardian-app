@@ -72,10 +72,24 @@ EntryView describeEntry(LogEntry e, DataLabels runLabels) {
           'Intent logged before sending: notify ${_s(d['contactId'])}',
           runLabels);
     case 'cascade_notified':
+      if (d['delivered'] == false) {
+        return EntryView(
+            '${_s(d['contactId'])} was NOT notified '
+            '(channel: ${_s(d['channel'])}). Nothing was sent.',
+            runLabels,
+            warn: true);
+      }
       return EntryView(
           'Mock notification handed to ${_s(d['contactId'])} '
           '(channel: ${_s(d['channel'])}). Nothing was really sent.',
           runLabels);
+    case 'kin_notification_skipped':
+      return EntryView(
+          'Kin notification SKIPPED for ${_s(d['contactId'])}: '
+          '${_s(d['reason'])} (you have not allowed kin to receive '
+          'emergency alerts). Nobody was contacted.',
+          runLabels,
+          warn: true);
     case 'cascade_no_response':
       final waited = d['waitedMs'] is num ? (d['waitedMs'] as num) / 1000 : null;
       return EntryView(

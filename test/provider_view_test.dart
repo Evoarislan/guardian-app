@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:guardian_app/adapters/health_store.dart';
+import 'package:guardian_app/consent/consent.dart';
 import 'package:guardian_app/fhir/fhir_export.dart';
 import 'package:guardian_app/main.dart';
 import 'package:guardian_app/proof_log.dart';
@@ -39,14 +40,19 @@ Future<List<HealthObservation>> _obs() async {
   ];
 }
 
+ConsentStore _allowed() =>
+    ConsentStore()..grant(ConsentRole.provider, ConsentDataClass.fhirExport);
+
 Widget _app({
   Future<ProofLog> Function()? loader,
   Future<List<HealthObservation>> Function()? observations,
+  ConsentStore? consent,
 }) =>
     MaterialApp(
         home: ProviderScreen(
             loader: loader ?? _fromDisk,
             observations: observations ?? _obs,
+            consent: consent ?? _allowed(),
             now: () => _now));
 
 Iterable<String> _allText(WidgetTester tester) => tester
